@@ -12,14 +12,14 @@ This is a slackbot that gets installed into a slack channel. You can start a Pom
 1. `yarn run start` will start the application
 2. Use a tool like ngrok to expose your local server. Save the https url for a later step.
 3. In Slack app settings (api.slack.com/apps), under Slash Commands, register a new command:
-  - Command: `tomato`
-  - Request URL: `https://<NGROK-URL>/slack/events`
-  - Short description: `Group pomodoro app`
-  - Usage hint: `[start, stop]`
+    - Command: `tomato`
+    - Request URL: `https://<NGROK-URL>/slack/events`
+    - Short description: `Group pomodoro app`
+    - Usage hint: `[start, stop]`
 4. In Slack app settings, under Event Subscriptions, enable events and use the following settings:
-  - Request URL: `https://<NGROK-URL>/slack/events`
-  - Subscribe to bot events: `reaction_added` and `reaction_removed`
+    - Request URL: `https://<NGROK-URL>/slack/events`
+    - Subscribe to bot events: `reaction_added` and `reaction_removed`
 5. In Slack app settings, under OAuth & Permissions, the following Scopes are required
-  - `app_mentions:read`
-  - `chat:write`
-  - `commands`
+    - `app_mentions:read`
+    - `chat:write`
+    - `commands`

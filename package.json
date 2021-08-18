@@ -4,7 +4,7 @@
   "description": "slack bot for group pomodoro by channel",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",
@@ -15,7 +15,6 @@
   "bugs": {
     "url": "https://github.com/stasquatch/group-tomato/issues"
   },
-  "homepage": "https://github.com/stasquatch/group-tomato#readme",
   "dependencies": {
     "@slack/bolt": "^3.5.0",
     "dotenv": "^10.0.0"

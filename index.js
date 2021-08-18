@@ -102,5 +102,7 @@ app.event('reaction_removed', async ({ event }) => {
 });
 
 (async () => {
-	await app.start(process.env.PORT || 3000);
+	const port = process.env.PORT || 3000;
+	await app.start(port);
+	console.log(`Running on port ${port}`);
 })();

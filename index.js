@@ -63,17 +63,19 @@ app.command('/tomato', async ({ command, ack, say }) => {
 			if (pomodoroCadence[index].type === pomodoroSessionTypes.session) {
 				// use promises to make sure all steps finish before continuing
 				let sessionNumber = index + 1;
+				let length = pomodoroCadence[index].length;
 
 				await say(`Session #${sessionNumber} starts in ${sessionBuffer} minutes, ${sessionParticipants.map(user => `<@${user}>`).join(', ')}. Post your goal in this thread :thread: *Note:* You can join anytime to be @'ed at the end of each session by using :woman-raising-hand: on any tomato message`);
 				await timeout(sessionBuffer * 1000 * 60);
 
-				await say(`Session #${sessionNumber} starting now. Heads down ${sessionParticipants.map(user => `<@${user}>`).join(', ')}`);
-				await timeout(1 * 1000 * 60)
+				await say(`Session #${sessionNumber} starts now and will last ${length} minutes. Heads down ${sessionParticipants.map(user => `<@${user}>`).join(', ')}`);
+				await timeout(length * 1000 * 60);
 
 				await say(`Session #${sessionNumber} is over, ${sessionParticipants.map(user => `<@${user}>`).join(', ')}! How'd you do on your goals? :thread:`);
+				await timeout(10 * 1000) // ten seconds
 			} else {
-				await say(`Break time, ${sessionParticipants.map(user => `<@${user}>`).join(', ')}! See you back here in ${pomodoroCadence[index].length} minutes`)
-				await timeout(pomodoroCadence[index].length * 1000 * 60);
+				await say(`Break time, ${sessionParticipants.map(user => `<@${user}>`).join(', ')}! See you back here in ${length} minutes`);
+				await timeout(length * 1000 * 60);
 			}
 		}
 	} else if (command.text === 'stop') {

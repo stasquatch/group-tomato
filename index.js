@@ -93,7 +93,7 @@ app.command('/tomato', async ({ command, ack, say }) => {
 		isActive = false;
 		clearActiveTimeout();
 	} else if (command.text === 'help') {
-		await say(`v${pjson.version}. I know the commands \`/tomato start\` and \`/tomato stop\` and will add or remove participants using ${enrollReactjis.join(',')}`)
+		await say(`v${pjson.version}. I know the commands \`/tomato start\` and \`/tomato stop\` and will add or remove participants using ${enrollReactjis.map(emoji => `:${emoji}:`).join(', ')}`)
 	} else {
 		await say('I only know the `start` and `stop` command');
 	}

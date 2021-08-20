@@ -1,4 +1,5 @@
 const { App } = require('@slack/bolt');
+const pjson = require('./package.json');
 const { timeout, clearActiveTimeout } = require('./timeHelpers');
 require('dotenv').config();
 
@@ -61,7 +62,12 @@ app.command('/tomato', async ({ command, ack, say }) => {
 		// cycle through regular pomodoro cadence
 		for (var index = 0; index < pomodoroCadence.length; index++) {
 			if (pomodoroCadence[index].type === pomodoroSessionTypes.session) {
-				// use promises to make sure all steps finish before continuing
+				if (sessionParticipants.length === 0) {
+					await say('Oops, no participants. Ending this session, but you can start a new one with `/tomato start`');
+					isActive = false;
+					return;
+				}
+
 				let sessionNumber = index + 1;
 				let length = pomodoroCadence[index].length;
 
@@ -77,6 +83,9 @@ app.command('/tomato', async ({ command, ack, say }) => {
 				await say(`Break time, ${sessionParticipants.map(user => `<@${user}>`).join(', ')}! See you back here in ${length} minutes`);
 				await timeout(length * 1000 * 60);
 			}
+
+			isActive = false;
+			await say('This pomodoro session is over, start a new one with `/tomato start`')
 		}
 	} else if (command.text === 'stop') {
 		await say('Cancelling the active session. You can start a new one with `/tomato start`');
@@ -84,7 +93,7 @@ app.command('/tomato', async ({ command, ack, say }) => {
 		isActive = false;
 		clearActiveTimeout();
 	} else if (command.text === 'help') {
-		await say(`v1.0.1. I know the commands \`/tomato start\` and \`/tomato stop\` and will add or remove participants using ${enrollReactjis.join(',')}`)
+		await say(`v${pjson.version}. I know the commands \`/tomato start\` and \`/tomato stop\` and will add or remove participants using ${enrollReactjis.join(',')}`)
 	} else {
 		await say('I only know the `start` and `stop` command');
 	}

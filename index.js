@@ -83,6 +83,8 @@ app.command('/tomato', async ({ command, ack, say }) => {
 		sessionParticipants = [];
 		isActive = false;
 		clearActiveTimeout();
+	} else if (command.text === 'help') {
+		await say(`v1.0.1. I know the commands \`/tomato start\` and \`/tomato stop\` and will add or remove participants using ${enrollReactjis.join(',')}`)
 	} else {
 		await say('I only know the `start` and `stop` command');
 	}
